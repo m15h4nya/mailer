@@ -1,0 +1,212 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  Client:
+    properties:
+      CreatedAt:
+        format: date-time
+        type: string
+      DeletedAt:
+        $ref: '#/definitions/DeletedAt'
+      ID:
+        format: uint64
+        type: integer
+      UpdatedAt:
+        format: date-time
+        type: string
+      id:
+        type: string
+        x-go-name: ClientID
+      phone:
+        format: int64
+        type: integer
+        x-go-name: Phone
+      phone_code:
+        format: int64
+        type: integer
+        x-go-name: PhoneCode
+      tag:
+        type: string
+        x-go-name: Tag
+      time_zone:
+        format: int64
+        type: integer
+        x-go-name: TimeZone
+    type: object
+    x-go-package: apitask/db
+  DeletedAt:
+    $ref: '#/definitions/NullTime'
+  Mailing:
+    properties:
+      CreatedAt:
+        format: date-time
+        type: string
+      DeletedAt:
+        $ref: '#/definitions/DeletedAt'
+      ID:
+        format: uint64
+        type: integer
+      UpdatedAt:
+        format: date-time
+        type: string
+      end_date:
+        format: date-time
+        type: string
+        x-go-name: EndDate
+      id:
+        type: string
+        x-go-name: MailingID
+      start_date:
+        format: date-time
+        type: string
+        x-go-name: StartDate
+      status:
+        type: boolean
+        x-go-name: Status
+      tags:
+        type: string
+        x-go-name: Tags
+      text:
+        type: string
+        x-go-name: Text
+    type: object
+    x-go-package: apitask/db
+  NullTime:
+    description: |-
+      NullTime implements the Scanner interface so
+      it can be used as a scan destination, similar to NullString.
+    properties:
+      Time:
+        format: date-time
+        type: string
+      Valid:
+        type: boolean
+    title: NullTime represents a time.Time that may be null.
+    type: object
+    x-go-package: database/sql
+info:
+  description: Documentation for Products API
+  title: Products API
+paths:
+  /client:
+    post:
+      description: Adds new client to DB
+      operationId: AddClient
+      parameters:
+      - in: body
+        name: client
+        schema:
+          $ref: '#/definitions/Client'
+        x-go-name: Client
+      responses: {}
+      tags:
+      - client
+  /client/{id}:
+    delete:
+      description: Deletes client from DB
+      operationId: DeleteClient
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: ClientId
+      responses: {}
+      tags:
+      - client
+    patch:
+      description: Updates client in db
+      operationId: UpdateClient
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: ClientId
+      - in: body
+        name: client
+        schema:
+          $ref: '#/definitions/Client'
+        x-go-name: Client
+      responses: {}
+      tags:
+      - client
+  /mailing:
+    post:
+      description: Adds new mailing to DB
+      operationId: AddMailing
+      parameters:
+      - in: body
+        name: mailing
+        schema:
+          $ref: '#/definitions/Mailing'
+        x-go-name: Mailing
+      responses: {}
+      tags:
+      - mailing
+  /mailing/{id}:
+    delete:
+      description: Deletes mailing from DB
+      operationId: DeleteMailing
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: MailingId
+      responses: {}
+      tags:
+      - mailing
+    patch:
+      description: Updates mailing in db
+      operationId: UpdateMailing
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: MailingId
+      - in: body
+        name: mailing
+        schema:
+          $ref: '#/definitions/Mailing'
+        x-go-name: Mailing
+      responses: {}
+      tags:
+      - mailing
+  /mailing/start:
+    post:
+      description: Start mailing
+      operationId: StartMailing
+      responses: {}
+      tags:
+      - mailing
+  /mailing/statistics:
+    get:
+      description: Returns statistics about mailings
+      operationId: GetMailingStatistics
+      responses:
+        "200":
+          $ref: '#/responses/MailingStatistics'
+      tags:
+      - mailing
+  /statistics:
+    get:
+      description: Returns statistics about sent messages
+      operationId: GetStatistics
+      responses:
+        "200":
+          $ref: '#/responses/StatisticsResponse'
+      tags:
+      - statistics
+produces:
+- application/json
+responses:
+  MailingStatistics:
+    description: ""
+  StatisticsResponse:
+    description: ""
+schemes:
+- http
+swagger: "2.0"
