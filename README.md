@@ -16,3 +16,7 @@ docker run -dp 8080:8080 --name apitask apitask:latest
 ```
 
 Now the service is listening on port 8080
+
+## Additional tasks
+
+implemented additional task #5
