@@ -3,7 +3,9 @@
 ## Getting started
 
 Test task for fabrique.studio job vacancy
+
 The service is used to mailing users via REST requests
+
 More docs on ip:8080/docs
 
 ## Installation
